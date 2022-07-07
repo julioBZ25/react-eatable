@@ -1,4 +1,3 @@
-import React from "react"
 import { BASE_URL } from "../config"
 
 export default function searchDishes(endpoint){
