@@ -23,8 +23,13 @@ function ProductsProvider(props){
   }
 
   function editProductDish(id, values){
+    const newDishes = dishes
+    const index = dishes.findIndex( dish => dish.id === +id);
+    console.log(index)
+    newDishes.splice(index, 1)
+    console.log(newDishes)
     editDish(`products/${id}`, values).then((data) => {
-      setDishes([...dishes, data])
+      setDishes([...newDishes, data])
       navigate(`/categories/${data.category}`)
     }).catch((error) => setErrors(error))
   }
@@ -32,6 +37,7 @@ function ProductsProvider(props){
   const value = {
     dishes,
     createProductDish,
+    editProductDish,
     errors,
   }
 

@@ -1,9 +1,12 @@
 import styled from '@emotion/styled';
 import React from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { typography } from '../../styles/typography';
 import Button from '../Button/Button';
 import { useProducts } from '../Context/ProductsContext';
+import { RiEditBoxFill, RiDeleteBinFill} from "react-icons/ri";
+
+const customStylesIcon = {width: '0.9rem', height: '0.9rem', color: '#FA4A0C', cursor: 'pointer'};
 
 const ProductContainer = styled.div`
   padding: 0 29px;
@@ -13,7 +16,6 @@ const ProductContainer = styled.div`
   row-gap: 30px;
   margin-bottom: 90px;
 `
-
 const ProductImageContainer = styled.div`
   width: 130px;
   height: 130px;
@@ -34,7 +36,7 @@ const ProductCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 0.25rem;
   box-shadow: 0px 30px 60px 0px rgba(57,57,57,0.09);
   -webkit-box-shadow: 0px 30px 60px 0px rgba(57,57,57,0.09);
   -moz-box-shadow: 0px 30px 60px 0px rgba(57,57,57,0.09);
@@ -43,7 +45,6 @@ const ProductCard = styled.div`
     ${typography.semibold['s']}
   }
 `
-
 export const ContainerPage = styled.div`
   display: flex;
   flex-direction: column;
@@ -58,7 +59,16 @@ export const ContainerPage = styled.div`
 `
 export const ProductFooter = styled.footer`  
   position: fixed;
-  bottom: 10px;
+  bottom: 25px;
+  right: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`
+const IconWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 `
 
 const ProductsDashboard = () => {
@@ -68,8 +78,13 @@ const ProductsDashboard = () => {
 
   const products = dishes.filter( (dish) => dish.category === category )
 
-  const handleClick = () => {
+  const handleCreate = () => {
     navigate('/create')
+  }
+
+  const handleClick = (event) => {
+    if (event.target.dataset.id === undefined) return 
+    navigate(`/product/edit/${event.target.dataset.id}`)
   }
 
   return (
@@ -87,11 +102,15 @@ const ProductsDashboard = () => {
               <p>{product.name}</p>
               <p style={{color: 'red'}}>${product.price}</p>
             </div>
+            <IconWrapper>
+              <RiEditBoxFill style={customStylesIcon} data-id={product.id} onClick={handleClick}/>
+              <RiDeleteBinFill style={customStylesIcon} data-id={product.id} onClick={handleClick}/>
+            </IconWrapper>
           </ProductCard>
         ))}
       </ProductContainer>
       <ProductFooter>
-        <Button handleClick={handleClick}>Create Product</Button>
+        <Button handleClick={handleCreate}>Create Product</Button>
       </ProductFooter>
     </ContainerPage>
   )
