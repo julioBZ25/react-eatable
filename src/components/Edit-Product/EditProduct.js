@@ -1,34 +1,6 @@
-import styled from '@emotion/styled';
-import { Field, Form, Formik } from 'formik';
-import React from 'react';
-import Button from '../Button/Button';
-import { useProducts } from '../Context/ProductsContext';
-import { ContainerPage, ProductFooter } from '../Products-Dashboard/ProductsDashboard'
+import React from 'react'
 
-const FieldWrapper = ({ className, ...props }) => (
-  <Field className={className} {...props} />
-)
-const FormWrapper = ({ className, ...props }) => (
-  <Form className={className} {...props} />
-)
-export const CustomField = styled(FieldWrapper)`
-  border: none;
-  background-color: #e3e3eb;
-  border-bottom: 1px solid black;
-  width: 100%;
-`
-export const CustomForm = styled(FormWrapper)`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0 2rem;
-`
-export const ErrorMessage = styled.small`
-  color: red;
-`
-const CreateProduct = () => {
-
+const EditProduct = () => {
   const { createProductDish, errors } = useProducts();
 
   return (
@@ -111,4 +83,4 @@ const CreateProduct = () => {
   )
 }
 
-export default CreateProduct
+export default EditProduct
