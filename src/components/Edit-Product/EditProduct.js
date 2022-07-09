@@ -1,21 +1,30 @@
+import { Formik } from 'formik';
 import React from 'react'
+import Button from '../Button/Button';
+import { useParams } from 'react-router-dom';
+import { useProducts } from '../Context/ProductsContext';
+import { CustomField, CustomForm, ErrorMessage } from '../Create-Product/CreateProduct';
+import { ContainerPage, ProductFooter } from '../Products-Dashboard/ProductsDashboard';
 
 const EditProduct = () => {
-  const { createProductDish, errors } = useProducts();
+  const { editProductDish, errors, dishes } = useProducts();
+  const { id } = useParams();
+  const [dish] = dishes.filter((dish) => dish.id === +id)
+  console.log(dish)
 
   return (
     <ContainerPage>
-      <h1>Create Product</h1>
+      <h1>Edit Product</h1>
       <Formik
         initialValues={{
-          name: '',
-          price: '',
-          description: '',
-          category: '',
-          picture_url: ''
+          name: dish.name,
+          price: dish.price,
+          description: dish.description,
+          category: dish.category,
+          picture_url: dish.picture_url,
         }}
         onSubmit={async (values) => {
-          await createProductDish(values)
+          await editProductDish(id, values)
         }}
       >
         <CustomForm>
