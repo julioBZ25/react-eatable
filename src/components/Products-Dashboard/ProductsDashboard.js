@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { typography } from '../../styles/typography';
 import Button from '../Button/Button';
 import { useProducts } from '../Context/ProductsContext';
@@ -49,13 +49,14 @@ export const ContainerPage = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  padding-top: 25px;
+  padding: 25px;
+  height: 100%;
   & h1 {
     margin: 0;
     ${typography.semibold['l']}
   }
 `
-const ProductFooter = styled.footer`  
+export const ProductFooter = styled.footer`  
   position: fixed;
   bottom: 10px;
 `
@@ -63,11 +64,12 @@ const ProductFooter = styled.footer`
 const ProductsDashboard = () => {
   const { category } = useParams();
   const { dishes } = useProducts();
+  const navigate = useNavigate();
 
   const products = dishes.filter( (dish) => dish.category === category )
 
   const handleClick = () => {
-    console.log('click')
+    navigate('/create')
   }
 
   return (
