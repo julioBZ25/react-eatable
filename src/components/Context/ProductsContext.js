@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { createDish, searchDishes } from '../Api-Fetch/ApiFetch'
+import { useNavigate } from 'react-router-dom'
+import { createDish, editDish, searchDishes } from '../Api-Fetch/ApiFetch'
 
 const ProductsContext = React.createContext()
 
 function ProductsProvider(props){
   const [dishes, setDishes] = useState([])
   const [errors, setErrors] = useState(null)
+  const navigate = useNavigate();
 
   useEffect(() => {
     searchDishes('products').then(data => {
@@ -14,7 +16,17 @@ function ProductsProvider(props){
   }, [])
 
   function createProductDish(values){
-    createDish('products', values).then((data) => setDishes([...dishes, data])).catch((error) => setErrors(error))
+    createDish('products', values).then((data) => {
+      setDishes([...dishes, data])
+      navigate(`/categories/${data.category}`)
+    }).catch((error) => setErrors(error))
+  }
+
+  function editProductDish(id, values){
+    editDish(`products/${id}`, values).then((data) => {
+      setDishes([...dishes, data])
+      navigate(`/categories/${data.category}`)
+    }).catch((error) => setErrors(error))
   }
 
   const value = {
