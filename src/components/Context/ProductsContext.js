@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { createDish, editDish, searchDishes } from '../Api-Fetch/ApiFetch'
+import { createDish, deleteDish, editDish, searchDishes } from '../Api-Fetch/ApiFetch'
 
 const ProductsContext = React.createContext()
 
@@ -25,19 +25,25 @@ function ProductsProvider(props){
   function editProductDish(id, values){
     const newDishes = dishes
     const index = dishes.findIndex( dish => dish.id === +id);
-    console.log(index)
     newDishes.splice(index, 1)
-    console.log(newDishes)
     editDish(`products/${id}`, values).then((data) => {
       setDishes([...newDishes, data])
       navigate(`/categories/${data.category}`)
     }).catch((error) => setErrors(error))
   }
 
+  function deleteProductDish(id){
+    deleteDish(`products/${id.toString()}`).then(() => {
+      setDishes(dishes.filter(dish => dish.id !== id))
+      // navigate(`/categories/${category}`)
+    })
+  }
+
   const value = {
     dishes,
     createProductDish,
     editProductDish,
+    deleteProductDish,
     errors,
   }
 

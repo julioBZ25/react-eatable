@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { typography } from '../../styles/typography';
 import Button from '../Button/Button';
 import { useProducts } from '../Context/ProductsContext';
 import { RiEditBoxFill, RiDeleteBinFill} from "react-icons/ri";
+import DeleteModal from '../Modal/DeleteModal';
+import { createPortal } from 'react-dom';
 
 const customStylesIcon = {width: '0.9rem', height: '0.9rem', color: '#FA4A0C', cursor: 'pointer'};
 
@@ -72,19 +74,30 @@ const IconWrapper = styled.div`
 `
 
 const ProductsDashboard = () => {
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [dish, setDish] = useState({})
   const { category } = useParams();
   const { dishes } = useProducts();
   const navigate = useNavigate();
 
-  const products = dishes.filter( (dish) => dish.category === category )
+  const products = dishes.filter( (dish) => dish.category === category );
 
   const handleCreate = () => {
     navigate('/create')
   }
 
-  const handleClick = (event) => {
-    if (event.target.dataset.id === undefined) return 
-    navigate(`/product/edit/${event.target.dataset.id}`)
+  const handleClick = (product, action) => {
+    switch (action) {
+      case 'edit':
+        navigate(`/product/edit/${product.id.toString()}`);
+        break;
+      case 'delete':
+        setDeleteModal(!deleteModal);
+        setDish(product);
+        break;
+      default:
+        break;
+    }
   }
 
   return (
@@ -103,15 +116,24 @@ const ProductsDashboard = () => {
               <p style={{color: 'red'}}>${product.price}</p>
             </div>
             <IconWrapper>
-              <RiEditBoxFill style={customStylesIcon} data-id={product.id} onClick={handleClick}/>
-              <RiDeleteBinFill style={customStylesIcon} data-id={product.id} onClick={handleClick}/>
+              <RiEditBoxFill style={customStylesIcon}  onClick={() => handleClick(product, 'edit')}/>
+              <RiDeleteBinFill style={customStylesIcon} onClick={() => handleClick(product, 'delete')}/>
             </IconWrapper>
           </ProductCard>
         ))}
       </ProductContainer>
       <ProductFooter>
-        <Button handleClick={handleCreate}>Create Product</Button>
+        <Button handleClick={handleCreate} colorbuttom={'orange'} sizebuttom={'default'}>Create Product</Button>
       </ProductFooter>
+      {createPortal(
+          <DeleteModal
+            setDeleteModal={setDeleteModal}
+            deleteModal={deleteModal}
+            dish={dish}
+          >
+            
+          </DeleteModal>, document.getElementById("modal-root")
+        )}
     </ContainerPage>
   )
 }
