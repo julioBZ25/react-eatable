@@ -103,7 +103,7 @@ const CreateProduct = () => {
             )}
           </div>
           <ProductFooter>
-            <Button type="submit">Submit</Button>
+            <Button type="submit" color={'orange'} size={'default'}>Submit</Button>
           </ProductFooter>
         </CustomForm>
       </Formik>

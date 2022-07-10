@@ -46,11 +46,8 @@ async function editDish(endpoint, values){
     },
     body: JSON.stringify(values),
   }
-  // console.log(content)
-  // console.log(BASE_URL + endpoint);
 
   const response = await fetch(BASE_URL + endpoint, content);
-
   
   let data;
   if (!response.ok) {
@@ -68,4 +65,28 @@ async function editDish(endpoint, values){
   return data;
 }
 
-export { searchDishes, createDish, editDish }
+async function deleteDish(endpoint){
+  const content = {
+    method: "DELETE",
+  }
+
+  console.log(BASE_URL + endpoint)
+  const response = await fetch(BASE_URL + endpoint, content);
+  
+  // let data;
+  // if (!response.ok) {
+  //   console.log(response)
+  //   data = await response.json();
+  //   throw data
+  // }
+
+  // try {
+  //   data = await response.json();
+  // } catch ( error) {
+  //   data = response.statusText;
+  // }
+
+  // return data;
+}
+
+export { searchDishes, createDish, editDish, deleteDish}
