@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/categories" element={<CategoriesDashboard/>} />
+        <Route path="/" element={<CategoriesDashboard/>} />
         <Route path="/categories/:category" element={<ProductsDashboard />} />
         <Route path="/create" element={<CreateProduct/>} />
         <Route path="/product/edit/:id" element={<EditProduct/>} />
