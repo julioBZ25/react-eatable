@@ -19,13 +19,21 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ## Details
 
-![products](./public/img/eatable_products.JPG)
+Show Product               |  Edit Product          
+:-------------------------:|-------------------------:
+![products](./public/img/eatable_products.JPG)  | ![edit](./public/img/eatable_edit.JPG)
 
-![edit](./public/img/eatable_edit.JPG)
+<!-- ![products](./public/img/eatable_products.JPG) -->
 
-![create](./public/img/eatable_create.JPG)
+<!-- ![edit](./public/img/eatable_edit.JPG) -->
 
-![delete](./public/img/eatable_delete.JPG)
+Create Product               |  Delete Product          
+:-------------------------:|-------------------------:
+![create](./public/img/eatable_create.JPG)  | ![delete](./public/img/eatable_delete.JPG)
+
+<!-- ![create](./public/img/eatable_create.JPG)
+
+![delete](./public/img/eatable_delete.JPG) -->
 
 ## Features:
 
